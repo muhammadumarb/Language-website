@@ -4,7 +4,7 @@ const connectDB=require('./Confiq/Db');
 const app=express();
 app.use(cors({
   origin: 'https://language-web-umar-bhatti.netlify.app',
-  'http://localhost:5000',
+  'https://languagewebsite-o9moea14.back4.app',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true // only if you use cookies/auth credentials
