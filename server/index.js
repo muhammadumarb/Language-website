@@ -2,7 +2,12 @@ require('dotenv').config();
 const express=require('express'),cookieParser=require('cookie-parser'),cors=require('cors');
 const connectDB=require('./Confiq/Db');
 const app=express();
-app.use(cors({origin:process.env.CLIENT_URL||'http://localhost:5173',credentials:true}));
+app.use(cors({
+  origin: 'https://language-web-umar-bhatti.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // only if you use cookies/auth credentials
+}));
 app.use(express.json());app.use(express.urlencoded({extended:true}));app.use(cookieParser());
 app.use('/api/auth',require('./Router/User.router'));
 app.use('/api/course',require('./Router/Course.router'));
