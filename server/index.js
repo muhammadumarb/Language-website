@@ -11,7 +11,7 @@ app.use(cors({
 
 app.options('*', cors());
 app.use(express.json());app.use(express.urlencoded({extended:true}));app.use(cookieParser());
-app.use('/auth',require('./Router/User.router'));
+app.use('/api/auth',require('./Router/User.router'));
 app.use('/api/course',require('./Router/Course.router'));
 app.use('/api/lesson',require('./Router/Lesson.router'));
 app.use('/api/vocabulary',require('./Router/Vocabulary.router'));
