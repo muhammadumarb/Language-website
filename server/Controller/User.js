@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const DTO = require('../DTO/RegisterDto');
 const access = u => jwt.sign({id:u._id,role:u.role},process.env.Access_TOKEN,{expiresIn:'15m'});
 const refresh = u => jwt.sign({id:u._id,role:u.role},process.env.REFRESH_TOKEN,{expiresIn:'7d'});
-const cookie = (res,token) => res.cookie('refreshToken',token,{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'lax',path:'/',maxAge:7*86400000});
+const cookie = (res,token) => res.cookie('refreshToken',token,{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:process.env.NODE_ENV==='production'?'none':'lax',path:'/',maxAge:7*86400000});
 exports.createAccount = async (req,res) => {
  try {
   const {name,email,password}=req.body;
@@ -26,4 +26,4 @@ exports.loginAccount = async (req,res) => {
  }catch(e){console.error('Login:',e);return res.status(500).json({mess:'Login failed.'});}
 };
 exports.RefreshToken = async(req,res)=>{try{const t=req.cookies?.refreshToken;if(!t)return res.status(401).json({mess:'Session expired'});const d=jwt.verify(t,process.env.REFRESH_TOKEN);const u=await User.findById(d.id);if(!u)return res.status(401).json({mess:'User not found'});cookie(res,refresh(u));return res.json({user:new DTO(u),accessToken:access(u)});}catch{return res.status(401).json({mess:'Session expired'});}};
-exports.LogOut = (req,res)=>{res.clearCookie('refreshToken',{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'lax',path:'/'});return res.json({mess:'Logged out'});};
+exports.LogOut = (req,res)=>{res.clearCookie('refreshToken',{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:process.env.NODE_ENV==='production'?'none':'lax',path:'/'});return res.json({mess:'Logged out'});};
