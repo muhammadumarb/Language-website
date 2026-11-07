@@ -8,8 +8,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
-
-app.options('*', cors());
 app.use(express.json());app.use(express.urlencoded({extended:true}));app.use(cookieParser());
 app.use('/api/auth',require('./Router/User.router'));
 app.use('/api/course',require('./Router/Course.router'));
