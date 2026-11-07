@@ -4,11 +4,12 @@ const connectDB=require('./Confiq/Db');
 const app=express();
 app.use(cors({
   origin: 'https://language-web-umar-bhatti.netlify.app',
-  'https://languagewebsite-o9moea14.back4.app',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // only if you use cookies/auth credentials
+  credentials: true
 }));
+
+app.options('*', cors());
 app.use(express.json());app.use(express.urlencoded({extended:true}));app.use(cookieParser());
 app.use('/api/auth',require('./Router/User.router'));
 app.use('/api/course',require('./Router/Course.router'));
